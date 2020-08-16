@@ -1,0 +1,12 @@
+[package]
+name = "serde_json_traversal"
+version = "0.1.0"
+authors = ["Cecile Tonglet <cecile.tonglet@cecton.com>"]
+edition = "2018"
+description = "A macro that creates the boilerplate to traverse JSON (js/ts style)"
+readme = "README.md"
+license = "MIT/Apache-2.0"
+
+[dev-dependencies]
+serde_json = "1.0"
+trybuild = "1.0"
