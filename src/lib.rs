@@ -17,10 +17,11 @@ macro_rules! serde_json_traversal {
                 .ok_or_else(|| format!("Key {:?} not found.", stringify!($index))))
     }};
     ($var:expr => $key:expr) => {{
+        let key = stringify!($key).replace(" ", "");
         $var.as_object()
             .ok_or_else(|| format!("Not an object: {}", stringify!($var)))
-            .and_then(|x| x.get(stringify!($key))
-                .ok_or_else(|| format!("Key {:?} not found.", stringify!($key))))
+            .and_then(|x| x.get(&key)
+                .ok_or_else(|| format!("Key {:?} not found.", key)))
     }};
     (with_result $var:expr => [$index:expr] => $($tokens:tt)=>+) => {{
         let object = serde_json_traversal!(with_result $var => [$index]);

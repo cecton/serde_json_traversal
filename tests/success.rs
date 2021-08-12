@@ -18,18 +18,38 @@ fn success() {
         },
     });
 
-   assert_eq!(serde_json_traversal!(json_obj => foo).unwrap(), "bar");
-   assert_eq!(serde_json_traversal!(json_obj => bar => [0]).unwrap(), "foo");
-   assert_eq!(serde_json_traversal!(json_obj => baz => foo => [0]).unwrap(), "bar");
-   assert_eq!(serde_json_traversal!(json_obj => baz => foo => [1] => bar).unwrap(), "baz");
+    assert_eq!(serde_json_traversal!(json_obj => foo).unwrap(), "bar");
+    assert_eq!(
+        serde_json_traversal!(json_obj => bar => [0]).unwrap(),
+        "foo"
+    );
+    assert_eq!(
+        serde_json_traversal!(json_obj => baz => foo => [0]).unwrap(),
+        "bar"
+    );
+    assert_eq!(
+        serde_json_traversal!(json_obj => baz => foo => [1] => bar).unwrap(),
+        "baz"
+    );
 
-   let json_arr = serde_json::json!([
-        "foo",
-        {
-            "bar": "baz",
-        }
-   ]);
+    let json_arr = serde_json::json!([
+         "foo",
+         {
+             "bar": "baz",
+         }
+    ]);
 
-   assert_eq!(serde_json_traversal!(json_arr => [0]).unwrap(), "foo");
-   assert_eq!(serde_json_traversal!(json_arr => [1] => bar).unwrap(), "baz");
+    assert_eq!(serde_json_traversal!(json_arr => [0]).unwrap(), "foo");
+    assert_eq!(
+        serde_json_traversal!(json_arr => [1] => bar).unwrap(),
+        "baz"
+    );
+
+    let strip_spaces = serde_json::json!({
+        "success-message": "Hello World!",
+    });
+    assert_eq!(
+        serde_json_traversal!(strip_spaces => success-message).unwrap(),
+        "Hello World!"
+    );
 }
